@@ -1,5 +1,7 @@
 # STM32H7 正方体旋转动画
 
+如何编译参考[STM32H750XBH6_CMake_Template](https://github.com/haoruanwn/STM32H750XBH6_CMake_Template)
+
 ## 大致效果
 
 ![Snipaste_2025-08-31_22-04-46](https://markdownforyuanhao.oss-cn-hangzhou.aliyuncs.com/img1/20250831220522323.png)
