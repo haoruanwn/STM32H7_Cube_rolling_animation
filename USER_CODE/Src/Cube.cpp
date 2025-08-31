@@ -1,9 +1,16 @@
 #include "Cube.hpp"
 
-Cube::Cube(float size) {
-    float s = size / 2.0f;
-    vertices = {{
-        {-s, -s, -s}, {s, -s, -s}, {s, s, -s}, {-s, s, -s}, // 底面4个点
-        {-s, -s,  s}, {s, -s,  s}, {s, s,  s}, {-s, s,  s}  // 顶面4个点
-    }};
+// 使用成员初始化列表，并修正数值初始化逻辑
+Cube::Cube(float size) : vertices{{
+    {-FixedPoint(size/2), -FixedPoint(size/2), -FixedPoint(size/2)},
+    { FixedPoint(size/2), -FixedPoint(size/2), -FixedPoint(size/2)},
+    { FixedPoint(size/2),  FixedPoint(size/2), -FixedPoint(size/2)},
+    {-FixedPoint(size/2),  FixedPoint(size/2), -FixedPoint(size/2)},
+    {-FixedPoint(size/2), -FixedPoint(size/2),  FixedPoint(size/2)},
+    { FixedPoint(size/2), -FixedPoint(size/2),  FixedPoint(size/2)},
+    { FixedPoint(size/2),  FixedPoint(size/2),  FixedPoint(size/2)},
+    {-FixedPoint(size/2),  FixedPoint(size/2),  FixedPoint(size/2)}
+}}
+{
+    // 构造函数体现在为空，因为所有工作都在初始化列表中完成了
 }

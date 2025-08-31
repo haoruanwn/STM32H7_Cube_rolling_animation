@@ -1,7 +1,8 @@
 #pragma once
+#include "FixedPoint.hpp"
 
 struct Point3D {
-    float x, y, z;
+    FixedPoint x, y, z;
 };
 
 struct Point2D {

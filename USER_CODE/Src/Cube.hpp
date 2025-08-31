@@ -3,6 +3,7 @@
 #include "MathTypes.hpp"
 #include <array>
 #include <utility>
+#include "FixedPoint.hpp"
 
 class Cube {
 public:
