@@ -7,6 +7,7 @@
 #include <cstdint>
 #include <cmath>
 #include <algorithm>
+#include "TrigLUT.hpp"
 
 // 【关键修正】将 ToRGB565 从模板函数改为普通的 constexpr 函数
 // 它的功能与屏幕尺寸无关，不应该作为模板。
@@ -26,13 +27,19 @@ public:
         std::fill(backBuffer.begin(), backBuffer.end(), ToRGB565(LCD_BLACK));
     }
 
-    void drawCube(const Cube& cube, float angleX, float angleY, float angleZ) {
+    void drawCube(const Cube& cube, float angleX_deg, float angleY_deg, float angleZ_deg) {
         std::array<Point2D, 8> projectedPoints;
 
-        float sinX = sinf(angleX), cosX = cosf(angleX);
-        float sinY = sinf(angleY), cosY = cosf(angleY);
-        float sinZ = sinf(angleZ), cosZ = cosf(angleZ);
+        // 为了方便，定义一个LUT的别名，并指定精度（例如0.1度）
+        // 这个别名本身不会产生任何代码，只是为了书写方便
+        using LUT = CompileTimeTrigLUT<360, 10>;
 
+        // 【核心修改】用静态查表函数替换昂贵的sinf/cosf计算
+        float sinX = LUT::sin(angleX_deg), cosX = LUT::cos(angleX_deg);
+        float sinY = LUT::sin(angleY_deg), cosY = LUT::cos(angleY_deg);
+        float sinZ = LUT::sin(angleZ_deg), cosZ = LUT::cos(angleZ_deg);
+
+        // 后面的所有旋转和投影计算代码都保持不变
         for (size_t i = 0; i < cube.getVertices().size(); ++i) {
             const auto& p = cube.getVertices()[i];
 

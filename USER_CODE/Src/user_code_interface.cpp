@@ -8,19 +8,24 @@ std::array<uint16_t, ScreenWidth * ScreenHeight> Renderer<ScreenWidth, ScreenHei
     __attribute__((section(".frame_buffer")));
 
 void User_Code_Entry(void) {
-    // [OPTIMIZATION] 使用模板实例化 Renderer，在编译期确定大小，无堆内存分配
     Renderer<LCD_Width, LCD_Height> renderer;
     Cube cube(1.0f);
 
-    float angleX = 0.0f;
-    float angleY = 0.0f;
+    // 【修改】变量以角度(degree)为单位，更直观
+    float angleX_deg = 0.0f;
+    float angleY_deg = 0.0f;
 
     while (1) {
-        angleX += 0.02f;
-        angleY += 0.01f;
+        // 每次更新1度，速度可以按需调整
+        angleX_deg += 6.0f;
+        angleY_deg += 3.0f;
+
+        // 角度值会自动回绕，CompileTimeTrigLUT内部会处理fmod
+        // 无需手动处理 if (angleX_deg > 360) ...
 
         renderer.clear();
-        renderer.drawCube(cube, angleX, angleY, 0.0f);
+        // 【修改】直接将角度值传入drawCube函数
+        renderer.drawCube(cube, angleX_deg, angleY_deg, 0.0f);
         renderer.present();
     }
 }
