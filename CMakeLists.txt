@@ -60,7 +60,7 @@ add_subdirectory(Library)
 # 添加 Driver/User
 add_subdirectory(Drivers/User)
 
-add_subdirectory(USER_CODE)
+add_subdirectory(User_code)
 
 
 # Link directories setup

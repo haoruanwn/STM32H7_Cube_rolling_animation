@@ -14,7 +14,7 @@ public:
 
 private:
     std::array<Point3D, 8> vertices;
-    // [OPTIMIZATION] 使用 constexpr 确保在编译期初始化
+    // 使用 constexpr 确保在编译期初始化
     static constexpr std::array<std::pair<int, int>, 12> edges = {{
         {0, 1}, {1, 2}, {2, 3}, {3, 0}, // 底面
         {4, 5}, {5, 6}, {6, 7}, {7, 4}, // 顶面

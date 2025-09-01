@@ -1,6 +1,9 @@
 # Project exclude paths
 cmake-build-*/
 build/
-.vscode/
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
 .idea/
 
