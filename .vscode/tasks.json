@@ -43,7 +43,7 @@
                 "stm32h750xx",
                 "-O",
                 "connect_mode=under-reset",
-                "./build/Debug/STM32H750XBH6_Template.bin@0x90000000"
+                "./build/Debug/Cube_Rolling.elf@0x90000000"
             ],
             "dependsOn": "Build",
             "problemMatcher": [],

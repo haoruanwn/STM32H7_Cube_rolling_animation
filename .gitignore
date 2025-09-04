@@ -7,3 +7,6 @@ build/
 !.vscode/launch.json
 .idea/
 
+compile_commands.json
+cmake_install.cmake
+.cache

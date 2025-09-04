@@ -4,7 +4,7 @@
         "--compile-commands-dir=${workspaceFolder}/build/Debug",
         "--all-scopes-completion",
         "--completion-style=detailed",
-        "--query-driver=/usr/bin/arm-none-eabi-*",
+        "--query-driver=/home/hao/projects/tools/toolchains/arm-gnu-toolchain-14.2.rel1-x86_64-arm-none-eabi/bin/arm-none-eabi-*",
         "--header-insertion=never"
     ],
     "VsCodeTaskButtons.tasks": [
