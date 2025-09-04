@@ -6,6 +6,7 @@ build/
 !.vscode/tasks.json
 !.vscode/launch.json
 .idea/
+.settings
 
 compile_commands.json
 cmake_install.cmake

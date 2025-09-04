@@ -28,5 +28,10 @@
             "task": "Clean",
             "tooltip": "Clean the build directory"
         }
-    ]
+    ],
+    "cmake.cmakePath": "cube-cmake",
+    "cmake.configureArgs": [
+        "-DCMAKE_COMMAND=cube-cmake"
+    ],
+    "stm32cube-ide-clangd.path": "cube"
 }
