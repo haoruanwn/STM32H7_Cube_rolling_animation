@@ -1620,6 +1620,53 @@ HAL_StatusTypeDef LCD_SPI_TransmitBuffer(SPI_HandleTypeDef *hspi, uint16_t *pDat
     return errorcode;
 }
 
+// 使用dma进行发送的函数
+// DMA传输完成的标志
+static volatile uint8_t spi_tx_dma_completed = 1;
+void LCD_CopyBuffer_DMA(uint16_t x, uint16_t y, uint16_t width, uint16_t height, uint16_t *DataBuff)
+{
+    // 等待上一次DMA传输完成
+    while(spi_tx_dma_completed == 0);
+
+    // 设置DMA未完成标志
+    spi_tx_dma_completed = 0;
+
+    // 1. 设置屏幕显示地址范围 (这部分不变)
+    LCD_SetAddress(x, y, x + width - 1, y + height - 1);
+
+    // 2. 拉高DC引脚，表示接下来传输的是数据 (这部分不变)
+    LCD_DC_Data;
+
+    // 3. 确保SPI工作在16位模式
+    // 注意：如果你的其他函数也可能改变这个设置，那么在这里强制设置是安全的。
+    if (LCD_SPI.Init.DataSize != SPI_DATASIZE_16BIT)
+    {
+        LCD_SPI.Init.DataSize = SPI_DATASIZE_16BIT;
+        HAL_SPI_Init(&LCD_SPI);
+    }
+
+    // 4. 【核心】启动SPI的DMA传输
+    // HAL库的DMA函数需要一个uint8_t*的指针，我们进行强制类型转换。
+    // 传输的数据量是 width * height 个16位像素。
+    HAL_SPI_Transmit_DMA(&LCD_SPI, (uint8_t *)DataBuff, width * height);
+}
+
+// SPI DMA 发送完成回调函数
+void HAL_SPI_TxCpltCallback(SPI_HandleTypeDef *hspi)
+{
+    // 检查是否是我们用于LCD的SPI外设
+    if(hspi->Instance == LCD_SPI.Instance)
+    {
+        // 1. 恢复SPI到默认的8位数据宽度，以防影响其他非DMA函数（如发送指令）
+        LCD_SPI.Init.DataSize = SPI_DATASIZE_8BIT;
+        HAL_SPI_Init(&LCD_SPI);
+
+        // 2. 设置DMA传输完成标志
+        spi_tx_dma_completed = 1;
+    }
+}
+
+
 /**************************************************************************************************************************************************************************************************************************************************************************FANKE***/
 // 实验平台：反客 STM32H750核心板
 //
