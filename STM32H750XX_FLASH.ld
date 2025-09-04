@@ -233,7 +233,7 @@ SECTIONS
     *(.frame_buffer)
     *(.frame_buffer*)
     _efb = .; /* end of frame buffer */
-  } >RAM_D2
+  } >RAM
 
   
   PROVIDE( __non_tls_bss_start = ADDR(.bss) );
