@@ -2,6 +2,7 @@
 #include "Renderer.hpp"
 #include "Cube.hpp"
 #include "lcd_spi_200.h"
+#include "gpio.h"
 
 template <uint16_t ScreenWidth, uint16_t ScreenHeight>
 std::array<uint16_t, ScreenWidth * ScreenHeight> Renderer<ScreenWidth, ScreenHeight>::backBuffer
@@ -24,5 +25,7 @@ void User_Code_Entry(void) {
         // 将角度值传入drawCube函数
         renderer.drawCube(cube, angleX_deg, angleY_deg, 0.0f);
         renderer.present();
+        // HAL_GPIO_TogglePin(LED_GPIO_Port, LED_Pin);
+        // HAL_Delay(200);
     }
 }

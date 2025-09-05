@@ -1637,12 +1637,12 @@ void LCD_CopyBuffer_DMA(uint16_t x, uint16_t y, uint16_t width, uint16_t height,
     // 2. 拉高DC引脚，表示接下来传输的是数据
     LCD_DC_Data;
 
-    // 3. 确保SPI工作在16位模式
-    if (LCD_SPI.Init.DataSize != SPI_DATASIZE_16BIT)
-    {
-        LCD_SPI.Init.DataSize = SPI_DATASIZE_16BIT;
-        HAL_SPI_Init(&LCD_SPI);
-    }
+    // // 3. 确保SPI工作在16位模式
+    // if (LCD_SPI.Init.DataSize != SPI_DATASIZE_16BIT)
+    // {
+    //     LCD_SPI.Init.DataSize = SPI_DATASIZE_16BIT;
+    //     HAL_SPI_Init(&LCD_SPI);
+    // }
 
     // 4. 启动SPI的DMA传输
     HAL_SPI_Transmit_DMA(&LCD_SPI, (uint8_t *)DataBuff, width * height);
@@ -1654,9 +1654,9 @@ void HAL_SPI_TxCpltCallback(SPI_HandleTypeDef *hspi)
     // 检查是否是我们用于LCD的SPI外设
     if(hspi->Instance == LCD_SPI.Instance)
     {
-        // 1. 恢复SPI到默认的8位数据宽度，以防影响其他非DMA函数（如发送指令）
-        LCD_SPI.Init.DataSize = SPI_DATASIZE_8BIT;
-        HAL_SPI_Init(&LCD_SPI);
+        // // 1. 恢复SPI到默认的8位数据宽度，以防影响其他非DMA函数（如发送指令）
+        // LCD_SPI.Init.DataSize = SPI_DATASIZE_8BIT;
+        // HAL_SPI_Init(&LCD_SPI);
 
         // 2. 设置DMA传输完成标志
         spi_tx_dma_completed = 1;
