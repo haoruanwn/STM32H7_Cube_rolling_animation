@@ -1644,7 +1644,7 @@ void LCD_CopyBuffer_DMA(uint16_t x, uint16_t y, uint16_t width, uint16_t height,
         HAL_SPI_Init(&LCD_SPI);
     }
 
-    // 4. 【核心】启动SPI的DMA传输
+    // 4. 启动SPI的DMA传输
     HAL_SPI_Transmit_DMA(&LCD_SPI, (uint8_t *)DataBuff, width * height);
 }
 
